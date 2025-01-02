@@ -1,35 +1,28 @@
-const fs = require('fs')
+const User = require('../models/userModel');
 
+// Create a new user
+exports.createUser = async (req, res) => {
+  try {
+    const { nickname, password } = req.body;
 
-exports.createPlayer = async (req, res) =>{
-
-    
-    try{
-        const newPlayer = await Player.create(req.body)
-        res.status(201).json({
-            status: "created player successfuly",
-            message: "New Player is created",
-            data: {newPlayer}
-        })
-    }catch(err){
-        res.status(404).json({
-            status: "fail",
-            message:err
-        })
+    // Validate inputs
+    if (!nickname || !password) {
+      return res.status(400).json({ message: 'Nickname and password are required' });
     }
-}
 
-exports.getPlayer = async (req, res)=>{
-    try{
-        const player = await Player.findById(req.params.id)
-        res.status(200).json({
-            status: "success",
-            data: {player}
-        })
-    }catch(err){
-        res.status(404).json({
-            status: "fail",
-            message:err
-        })
-    }
-}
+    // Create the user
+    const newUser = await User.create({ nickname, password });
+
+    res.status(201).json({
+      status: 'success',
+      data: {
+        user: {
+          id: newUser._id,
+          nickname: newUser.nickname,
+        },
+      },
+    });
+  } catch (err) {
+    res.status(400).json({ status: 'error', message: err.message });
+  }
+};
