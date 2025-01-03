@@ -203,7 +203,7 @@ DATABASE_PASSWORD=<db_password>
 
 1. Start the server:
    ```bash
-   nodemon server.js
+   npm start
    ```
 2. Use a tool like Postman or cURL to test the endpoints.
 3. Verify responses match the examples provided above.
