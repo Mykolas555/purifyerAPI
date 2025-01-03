@@ -1,9 +1,14 @@
 const express = require('express');
 const userController = require('../controllers/userController');
+const validateID = require('../utils/validators');
 
 const router = express.Router();
 
-// Route for creating a user
-router.post('/create', userController.createUser);
+
+router.get('/',  userController.getAllUsers);
+
+// Route to get a single user by ID
+router.get('/:ID', validateID, userController.getUserById);
+
 
 module.exports = router;

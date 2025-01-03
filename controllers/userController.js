@@ -1,28 +1,47 @@
 const User = require('../models/userModel');
 
-// Create a new user
-exports.createUser = async (req, res) => {
+// Get all users
+exports.getAllUsers = async (req, res) => {
   try {
-    const { nickname, password } = req.body;
+    const users = await User.find();
 
-    // Validate inputs
-    if (!nickname || !password) {
-      return res.status(400).json({ message: 'Nickname and password are required' });
-    }
-
-    // Create the user
-    const newUser = await User.create({ nickname, password });
-
-    res.status(201).json({
+    res.status(200).json({
       status: 'success',
+      results: users.length,
       data: {
-        user: {
-          id: newUser._id,
-          nickname: newUser.nickname,
-        },
+        users,
       },
     });
   } catch (err) {
-    res.status(400).json({ status: 'error', message: err.message });
+    res.status(500).json({
+      status: 'error',
+      message: err.message,
+    });
+  }
+};
+
+// Get user by ID
+exports.getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.ID);
+
+    if (!user) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'User not found',
+      });
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        user,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: 'error',
+      message: err.message,
+    });
   }
 };

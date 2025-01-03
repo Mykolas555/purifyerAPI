@@ -5,14 +5,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Nickname is required'],
     unique: true,
-    trim: true,
   },
   password: {
     type: String,
     required: [true, 'Password is required'],
     minlength: 6,
   },
-});
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user', // Default role is 'user'
+  },
+}, { timestamps: true });
 
 // Create the User model
 const User = mongoose.model('User', userSchema);
