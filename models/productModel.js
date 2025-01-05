@@ -7,11 +7,26 @@ const productSchema = new mongoose.Schema({
     required: [true, 'Product name is required'],
     trim: true,
   },
-  price: {
-    type: Number,
+  model: {
+    type: String,
     required: [true, 'Product price is required'],
     min: 0,
-  }
+  },
+  summary: {
+    type: String,
+    required: [true, 'Product price is required'],
+    min: 0,
+  },
+  specs: {
+    type: String,
+    required: [true, 'Product price is required'],
+    min: 0,
+  },
+  description: {
+    type: String,
+    required: [true, 'Product price is required'],
+    min: 0,
+  },
 }, { timestamps: true });
 
 

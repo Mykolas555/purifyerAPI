@@ -68,3 +68,74 @@ exports.getProductById = async (req, res) => {
       });
     }
   };
+
+  exports.createProduct = async (req, res) => {
+    try {
+      const { name, model, summary, specs, description } = req.body;
+  
+      // Check if all required fields are present
+      if (!name || !model || !summary || !specs || !description) {
+        return res.status(400).json({ message: 'All fields are required' });
+      }
+  
+      // Create a new product
+      const product = new Product({
+        name,
+        model,
+        summary,
+        specs,
+        description,
+      });
+  
+      // Save to the database
+      const savedProduct = await product.save();
+  
+      res.status(201).json(savedProduct);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+  
+  exports.updateProduct = async (req, res) => {
+    try {
+      const { ID } = req.params;
+  
+      // Find the product by ID
+      const product = await Product.findById(ID);
+  
+      if (!product) {
+        return res.status(404).json({ message: 'Product not found' });
+      }
+  
+      // Update product fields
+      const updatedProduct = await Product.findByIdAndUpdate(
+        ID,
+        { $set: req.body },
+        { new: true, runValidators: true }
+      );
+  
+      res.status(200).json(updatedProduct);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+  
+ exports.deleteProduct = async (req, res) => {
+    try {
+      const { ID } = req.params;
+  
+      // Find and delete the product by ID
+      const product = await Product.findByIdAndDelete(ID);
+  
+      if (!product) {
+        return res.status(404).json({ message: 'Product not found' });
+      }
+  
+      res.status(200).json({ message: 'Product deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+  
+
+ 
