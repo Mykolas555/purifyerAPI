@@ -74,9 +74,7 @@ exports.getProductById = async (req, res) => {
       const { name, model, summary, specs, description } = req.body;
   
       // Check if all required fields are present
-      if (!name || !properties || !summary || !specs ) {
-        return res.status(400).json({ message: 'All fields are required' });
-      }
+     
   
       // Create a new product
       const product = new Product({
