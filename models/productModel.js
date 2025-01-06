@@ -7,7 +7,7 @@ const productSchema = new mongoose.Schema({
     required: [true, 'Product name is required'],
     trim: true,
   },
-  model: {
+ properties: {
     type: String,
     required: [true, 'Product price is required'],
     min: 0,
@@ -22,9 +22,8 @@ const productSchema = new mongoose.Schema({
     required: [true, 'Product price is required'],
     min: 0,
   },
-  description: {
+  image: {
     type: String,
-    required: [true, 'Product price is required'],
     min: 0,
   },
 }, { timestamps: true });
