@@ -1,4 +1,5 @@
 const Product = require('../models/productModel');
+const upload = require('../multer');  // Import the multer configuration
 
 // Get all products
 exports.getAllProducts = async (req, res) => {
@@ -71,24 +72,37 @@ exports.getProductById = async (req, res) => {
 
   exports.createProduct = async (req, res) => {
     try {
-      const { name, properties, summary, specs, image } = req.body;
+      // Handle image upload
+      upload.single('image')(req, res, async (err) => {
+        if (err) {
+          return res.status(400).json({ message: 'Error uploading image', error: err.message });
+        }
   
-      // Check if all required fields are present
-     
+        // After the file is uploaded, get the image path
+        const imagePath = req.file ? req.file.path : null;
   
-      // Create a new product
-      const product = new Product({
-        name,
-        properties,
-        summary,
-        specs,
-        image,
+        const { name, properties, summary, specs } = req.body;
+  
+        // Check if required fields are provided
+        if (!name || !properties || !summary || !specs) {
+          return res.status(400).json({ message: 'All fields are required' });
+        }
+  
+        // Create a new product with the image path
+        const product = new Product({
+          name,
+          properties,
+          summary,
+          specs,
+          image: imagePath, // Save the image path to MongoDB
+        });
+  
+        // Save the product to the database
+        const savedProduct = await product.save();
+  
+        // Return the saved product object in the response
+        res.status(201).json(savedProduct);
       });
-  
-      // Save to the database
-      const savedProduct = await product.save();
-  
-      res.status(201).json(savedProduct);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

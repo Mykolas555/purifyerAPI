@@ -4,26 +4,20 @@ const mongoose = require('mongoose');
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
-   
   },
- properties: {
+  properties: {
     type: String,
-    
   },
   summary: {
     type: String,
-   
   },
   specs: {
     type: String,
-    
   },
   image: {
-    type: String,
-    
+    type: String,  // This will store the image path or URL
   },
 }, { timestamps: true });
-
 
 const Product = mongoose.model('Product', productSchema);
 
