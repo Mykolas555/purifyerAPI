@@ -70,43 +70,32 @@ exports.getProductById = async (req, res) => {
     }
   };
 
-  exports.createProduct = async (req, res) => {
-    try {
-      // Handle image upload
-      upload.single('image')(req, res, async (err) => {
-        if (err) {
-          return res.status(400).json({ message: 'Error uploading image', error: err.message });
-        }
+  exports.createProduct = [
+    upload.single('image'),  // Use multer to handle image upload
+    async (req, res) => {
+      try {
+        const { name, summary, properties, specs } = req.body;
   
-        // After the file is uploaded, get the image path
-        const imagePath = req.file ? req.file.path : null;
+        // If image file exists, get the file path
+        const image = req.file ? req.file.path : null;
   
-        const { name, properties, summary, specs } = req.body;
-  
-        // Check if required fields are provided
-        if (!name || !properties || !summary || !specs) {
-          return res.status(400).json({ message: 'All fields are required' });
-        }
-  
-        // Create a new product with the image path
+        // Create new product
         const product = new Product({
           name,
-          properties,
           summary,
+          properties,
           specs,
-          image: imagePath, // Save the image path to MongoDB
+          image,
         });
   
-        // Save the product to the database
+        // Save product to the database
         const savedProduct = await product.save();
-  
-        // Return the saved product object in the response
         res.status(201).json(savedProduct);
-      });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
     }
-  };
+  ];
   
   exports.updateProduct = async (req, res) => {
     try {
