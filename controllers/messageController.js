@@ -47,3 +47,35 @@ exports.getMessageById = async (req, res) => {
       });
     }
   };
+
+exports.createMessage = async (req, res) => {
+    try {
+      // Create a new message with the data from the request body
+      const { name, email, company, message } = req.body;
+  
+      // Create a new message document in MongoDB
+      const newMessage = new Message({
+        name,
+        email,
+        company,
+        message,
+      });
+  
+      // Save the message to the database
+      const savedMessage = await newMessage.save();
+  
+      // Send a success response
+      return res.status(201).json({
+        success: true,
+        data: savedMessage,
+      });
+    } catch (error) {
+      // Handle any errors that occur during the process
+      console.error(error);
+      return res.status(500).json({
+        success: false,
+        message: 'Failed to create message',
+        error: error.message,
+      });
+    }
+  };

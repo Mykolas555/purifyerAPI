@@ -1,5 +1,5 @@
 const Product = require('../models/productModel');
-const upload = require('../multer');  // Import the multer configuration
+
 
 // Get all products
 exports.getAllProducts = async (req, res) => {
@@ -70,32 +70,7 @@ exports.getProductById = async (req, res) => {
     }
   };
 
-  exports.createProduct = [
-    upload.single('image'),  // Use multer to handle image upload
-    async (req, res) => {
-      try {
-        const { name, summary, properties, specs } = req.body;
   
-        // If image file exists, get the file path
-        const image = req.file ? req.file.path : null;
-  
-        // Create new product
-        const product = new Product({
-          name,
-          summary,
-          properties,
-          specs,
-          image,
-        });
-  
-        // Save product to the database
-        const savedProduct = await product.save();
-        res.status(201).json(savedProduct);
-      } catch (error) {
-        res.status(500).json({ message: error.message });
-      }
-    }
-  ];
   
   exports.updateProduct = async (req, res) => {
     try {
