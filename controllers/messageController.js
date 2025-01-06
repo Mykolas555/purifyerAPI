@@ -84,7 +84,7 @@ exports.createMessage = async (req, res) => {
     try {
       const { ID } = req.params;
   
-      // Find and delete the product by ID
+
       const deletedMessage = await Message.findByIdAndDelete(ID);
       if (!deletedMessage) {
         return res.status(404).json({ message: 'Message not found' });
