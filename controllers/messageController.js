@@ -79,3 +79,20 @@ exports.createMessage = async (req, res) => {
       });
     }
   };
+
+  exports.deleteMessage = async (req, res) => {
+    try {
+      const { ID } = req.params;
+  
+      // Find and delete the product by ID
+      const product = await Message.findByIdAndDelete(ID);
+  
+      if (!product) {
+        return res.status(404).json({ message: 'Message not found' });
+      }
+  
+      res.status(200).json({ message: 'Message deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
