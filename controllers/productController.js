@@ -71,7 +71,7 @@ exports.getProductById = async (req, res) => {
 
   exports.createProduct = async (req, res) => {
     try {
-      const { name, model, summary, specs, description } = req.body;
+      const { name, properties, summary, specs, image } = req.body;
   
       // Check if all required fields are present
      
