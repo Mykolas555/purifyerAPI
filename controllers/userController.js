@@ -75,18 +75,10 @@ exports.createUser = async (req, res) => {
     // Save user to database
     await user.save();
 
-    // Create JWT token using secret from .env file
-    const token = jwt.sign(
-      { id: user._id, role: user.role }, // Payload
-      process.env.JWT_SECRET,  // Secret from .env file
-      { expiresIn: '1h' }  // Token expiration time (1 hour)
-    );
-
-    // Send response with token
+    // Send response without the token
     res.status(201).json({
       message: 'User created successfully!',
       user: { nickname: user.nickname, role: user.role },  // Return user details excluding sensitive info
-      token,  // JWT token
     });
   } catch (error) {
     // Handle duplicate nickname error
@@ -104,6 +96,7 @@ exports.createUser = async (req, res) => {
     res.status(500).json({ message: 'Error creating user', error: error.message });
   }
 };
+
 
 
 // Delete user
