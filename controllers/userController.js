@@ -113,7 +113,7 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-// Login controller with JWT generation
+// Login
 exports.loginUser = async (req, res) => {
   try {
     const { nickname, password } = req.body;
@@ -172,4 +172,3 @@ exports.loginUser = async (req, res) => {
     });
   }
 };
-
