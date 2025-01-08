@@ -13,7 +13,6 @@ const userSchema = new mongoose.Schema({
   },
   passwordConfirm: {
     type: String,
-    required: [true, 'Password is required'],
     minlength: 10,
   },
   role: {
