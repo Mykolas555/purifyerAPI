@@ -153,12 +153,16 @@ exports.loginUser = async (req, res) => {
       { expiresIn: '1h' }  // Token expiration time (1 hour)
     );
 
-    // Send response with token
+    // Send response with token and user details
     res.status(200).json({
       status: 'success',
       message: 'Login successful',
       data: {
-        token,  // JWT token
+        token,   // JWT token
+        user: {
+          id: user._id,     // User ID
+          nickname: user.nickname,   // User nickname
+        },
       },
     });
   } catch (err) {
@@ -168,3 +172,4 @@ exports.loginUser = async (req, res) => {
     });
   }
 };
+
