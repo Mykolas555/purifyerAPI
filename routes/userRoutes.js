@@ -9,6 +9,6 @@ router.get('/',  userController.getAllUsers);
 router.post('/', userController.createUser);
 router.post('/login', userController.loginUser);
 router.get('/:ID', validateID, userController.getUserById);
-router.delete('/users/:ID', validateID, userController.deleteUser);
+router.delete('/users/:ID', validateID, validatorToken, userController.deleteUser);
 
 module.exports = router;
