@@ -6,7 +6,7 @@ require('dotenv').config()
 // Get all users
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().sort({ createdAt: -1 });
+    const users = await User.find().select('-password').sort({ createdAt: -1 });
     res.status(200).json({
       status: 'success',
       results: users.length,
@@ -25,7 +25,7 @@ exports.getAllUsers = async (req, res) => {
 // Get user by ID
 exports.getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.ID);
+    const user = await User.findById(req.params.ID).select('-password');
 
     if (!user) {
       return res.status(404).json({
