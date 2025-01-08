@@ -4,7 +4,6 @@ const Message = require('../models/messageModel');
 exports.getAllMessages = async (req, res) => {
   try {
     const messages = await Message.find();
-
     res.status(200).json({
       status: 'success',
       results: messages.length,
@@ -13,7 +12,6 @@ exports.getAllMessages = async (req, res) => {
       },
     });
   } catch (err) {
-    console.log(err); // Log the error for debugging
     res.status(500).json({
       status: 'error',
       message: err.message,
@@ -21,18 +19,16 @@ exports.getAllMessages = async (req, res) => {
   }
 };
 
-
+// get message by ID
 exports.getMessageById = async (req, res) => {
     try {
       const message = await Message.findById(req.params.ID);
-  
       if (!message) {
         return res.status(404).json({
           status: 'error',
           message: 'Message not found',
         });
       }
-  
       res.status(200).json({
         status: 'success',
         data: {
@@ -40,7 +36,6 @@ exports.getMessageById = async (req, res) => {
         },
       });
     } catch (err) {
-      console.log(err); // Log the error for debugging
       res.status(500).json({
         status: 'error',
         message: err.message,
@@ -48,30 +43,22 @@ exports.getMessageById = async (req, res) => {
     }
   };
 
+// Create message
 exports.createMessage = async (req, res) => {
     try {
-      // Create a new message with the data from the request body
       const { name, email, company, message } = req.body;
-  
-      // Create a new message document in MongoDB
       const newMessage = new Message({
         name,
         email,
         company,
         message,
       });
-  
-      // Save the message to the database
       const savedMessage = await newMessage.save();
-  
-      // Send a success response
       return res.status(201).json({
         success: true,
         data: savedMessage,
       });
     } catch (error) {
-      // Handle any errors that occur during the process
-      console.error(error);
       return res.status(500).json({
         success: false,
         message: 'Failed to create message',
@@ -80,16 +67,14 @@ exports.createMessage = async (req, res) => {
     }
   };
 
+// Delete message
   exports.deleteMessage = async (req, res) => {
     try {
       const { ID } = req.params;
-  
-
       const deletedMessage = await Message.findByIdAndDelete(ID);
       if (!deletedMessage) {
         return res.status(404).json({ message: 'Message not found' });
       }
-  
       res.status(200).json({ message: 'Message deleted successfully' });
     } catch (error) {
       res.status(500).json({ message: error.message });

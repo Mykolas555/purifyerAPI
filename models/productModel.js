@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema({
     type: String,
   },
   image: {
-    type: String,  // This will store the image path or URL
+    type: String,
   },
 }, { timestamps: true });
 

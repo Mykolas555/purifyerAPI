@@ -6,9 +6,8 @@ const router = express.Router();
 
 
 router.get('/',  userController.getAllUsers);
-
-// Route to get a single user by ID
+router.post('/', userController.createUser);
 router.get('/:ID', validateID, userController.getUserById);
-
+router.delete('/users/:ID', userController.deleteUser);
 
 module.exports = router;
