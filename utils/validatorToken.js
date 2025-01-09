@@ -11,6 +11,7 @@ const validatorToken = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify the token
+    console.log("id from validator token" + decoded)
     req.user = decoded; // Attach decoded user data to the request
     next(); // Proceed to the next middleware/controller
   } catch (error) {

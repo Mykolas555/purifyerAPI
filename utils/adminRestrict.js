@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 const adminRestrict = async (req, res, next) => {
   try {
     const userIdFromToken = req.user._id; // Get the user ID from the token
-
+    console.log("admin restrict" + userIdFromToken)
     // Check if the user has admin privileges
     const user = await User.findById(userIdFromToken);
     if (!user) {
