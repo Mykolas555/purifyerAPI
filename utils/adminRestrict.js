@@ -5,7 +5,8 @@ const adminRestrict = async (req, res, next) => {
     const userIdFromToken = req.user._id; // Get the user ID from the token
     console.log("admin restrict" + userIdFromToken)
     // Check if the user has admin privileges
-    const user = await User.findById(userIdFromToken);
+    const user = await User.findById(req.body.userIDDeleting);
+    console.log("user from admin restrics id " + user)
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }

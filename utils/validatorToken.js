@@ -8,10 +8,10 @@ const validatorToken = (req, res, next) => {
   }
 
   const token = authHeader.split(" ")[1]; // Extract the token from the header
-
+  console.log("validator token " + token)
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify the token
-    console.log("id from validator token" + decoded)
+    console.log("id from validator token" + decoded._id)
     req.user = decoded; // Attach decoded user data to the request
     next(); // Proceed to the next middleware/controller
   } catch (error) {
