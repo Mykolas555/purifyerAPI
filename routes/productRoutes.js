@@ -1,6 +1,5 @@
 const express = require('express');
 const productController = require('../controllers/productController');
-const validateID = require('../utils/validators');
 const upload = require('../multer');
 const validateID = require('../utils/validators');
 const validatorToken = require('../utils/validatorToken')
