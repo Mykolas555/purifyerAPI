@@ -6,8 +6,8 @@ const adminRestrict = require('../utils/adminRestrict')
 const router = express.Router();
 
 
-router.get('/',  userController.getAllUsers);
-router.post('/', userController.createUser);
+router.get('/', validatorToken, userController.getAllUsers);
+router.post('/', validatorToken, adminRestrict, userController.createUser);
 router.post('/login', userController.loginUser);
 router.get('/:ID', validateID, userController.getUserById);
 router.delete('/users/:ID', validateID, validatorToken, adminRestrict, userController.deleteUser);

@@ -97,25 +97,21 @@ exports.createUser = async (req, res) => {
   }
 };
 
-
-
 // Delete user
 exports.deleteUser = async (req, res) => {
   try {
-    const { ID } = req.params; // ID of the user to be deleted
-    const userIdFromToken = req.user._id; // ID of the user performing the action
-
+    const { ID } = req.params;
+    const userIdFromToken = req.user._id;
     // Check if the user is trying to delete themselves
     if (userIdFromToken === ID) {
       return res.status(403).json({ message: 'You cannot delete your own account' });
     }
-
     // Find and delete the user
     const user = await User.findByIdAndDelete(ID);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
+    // Sending status
     res.status(200).json({ message: 'User deleted successfully!' });
   } catch (error) {
     console.error(error);
