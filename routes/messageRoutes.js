@@ -1,8 +1,9 @@
 const express = require('express');
 const messageController = require('../controllers/messageController');
 const validateID = require('../utils/validators');
-const validatorToken = require('../utils/validatorToken')
-const adminRestrict = require('../utils/adminRestrict')
+const validatorToken = require('../utils/validatorToken');
+const adminRestrict = require('../utils/adminRestrict');
+
 const router = express.Router();
 
 router.get('/', validatorToken, messageController.getAllMessages);

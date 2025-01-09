@@ -19,7 +19,7 @@ exports.getAllMessages = async (req, res) => {
   }
 };
 
-// get message by ID
+// Get message by ID
 exports.getMessageById = async (req, res) => {
     try {
       const message = await Message.findById(req.params.ID);

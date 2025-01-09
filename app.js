@@ -4,7 +4,6 @@ const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
 const messageRoutes = require('./routes/messageRoutes');
-
 const dotenv = require('dotenv');
 
 dotenv.config({ path: './config.env' });

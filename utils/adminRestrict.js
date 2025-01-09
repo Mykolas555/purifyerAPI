@@ -1,8 +1,7 @@
 const User = require('../models/userModel');
-// Middleware to check if the user performing the action is an admin
+// Middleware to check if the user performing the action is admin
 const adminRestrict = async (req, res, next) => {
   try {
-    // Check if the user performing the action is an admin
     if (req.user.role !== 'admin') {
       return res.status(403).json({ message: 'You do not have permission to perform this action' });
     }
