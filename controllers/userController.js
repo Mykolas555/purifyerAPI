@@ -102,27 +102,24 @@ exports.createUser = async (req, res) => {
 // Delete user
 exports.deleteUser = async (req, res) => {
   try {
-    const { ID } = req.params; // ID of the user to delete
-    const userIdFromToken = req.user._id; // ID of the user making the request
-
-    console.log("Controller received ID:", ID);
-    console.log("Requesting user's ID:", userIdFromToken);
+    const { ID } = req.params; // ID of the user to be deleted
+    const userIdFromToken = req.user._id; // ID of the user performing the action
 
     // Check if the user is trying to delete themselves
     if (userIdFromToken === ID) {
-      return res.status(403).json({ message: "You cannot delete your own account." });
+      return res.status(403).json({ message: 'You cannot delete your own account' });
     }
 
-    // Proceed to delete the user
+    // Find and delete the user
     const user = await User.findByIdAndDelete(ID);
     if (!user) {
-      return res.status(404).json({ message: "User not found." });
+      return res.status(404).json({ message: 'User not found' });
     }
 
-    res.status(200).json({ message: "User deleted successfully!" });
+    res.status(200).json({ message: 'User deleted successfully!' });
   } catch (error) {
-    console.error("Error in deleteUser controller:", error);
-    res.status(500).json({ message: "Error deleting user", error: error.message });
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
