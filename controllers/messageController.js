@@ -1,7 +1,7 @@
 const Message = require('../models/messageModel');
-const XLSX = require('xlsx');
 const fs = require('fs');
 const path = require('path');
+const ExcelJS = require('exceljs');
 
 // Get all messages
 exports.getAllMessages = async (req, res) => {
