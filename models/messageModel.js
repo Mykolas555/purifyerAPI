@@ -10,10 +10,7 @@ const messageSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Email is required'],
     trim: true,
-    match: [
-      /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-      'Please provide a valid email address',
-    ],
+    match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,'Please provide a valid email address'],
   },
   company: {
     type: String,

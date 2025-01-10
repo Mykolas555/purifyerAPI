@@ -71,7 +71,6 @@ exports.createUser = async (req, res) => {
       user: { nickname: user.nickname, role: user.role },
     });
   } catch (error) {
-    console.error("Error creating user:", error); // Log the error for debugging
     if (error.code === 11000) {
       return res.status(400).json({ message: 'Nickname already exists.' });
     }
