@@ -11,11 +11,6 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Password is required'],
     minlength: 10,
   },
-  passwordConfirm: {
-    type: String,
-    required: [true, 'Password confirmation is required'],
-    minlength: 10,
-  },
   role: {
     type: String, 
     enum: ['user', 'admin'],
