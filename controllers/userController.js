@@ -74,11 +74,9 @@ exports.createUser = async (req, res) => {
     if (error.code === 11000) {
       return res.status(400).json({ message: 'Nickname already exists.' });
     }
-    if (error.errors) {
-      const validationErrors = Object.values(error.errors).map((err) => err.message);
-      return res.status(400).json({ message: 'Validation error', errors: validationErrors });
+    else {
+      res.status(500).json({ message: 'Internal server error' });
     }
-    res.status(500).json({ message: 'Error creating user', error: error.message });
   }
 };
 
