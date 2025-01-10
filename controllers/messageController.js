@@ -85,53 +85,45 @@ exports.createMessage = async (req, res) => {
   };
 
 // Export all messages to excel file and download it
-  exports.exportMessagesToExcel = async (req, res) => {
-    try {
-      const messages = await Message.find();
-      // Convert the data to a format compatible with xlsx
-      const messageData = messages.map((message) => ({
-        Name: message.name,
-        Email: message.email,
-        Company: message.company || 'N/A',
-        Message: message.message,
-        CreatedAt: message.createdAt.toISOString(),
-      }));
-      // Create a new workbook and add a worksheet
-      const workbook = XLSX.utils.book_new();
-      const worksheet = XLSX.utils.json_to_sheet(messageData);
-      const headerRange = XLSX.utils.decode_range(worksheet['!ref']);
-      for (let col = headerRange.s.c; col <= headerRange.e.c; col++) {
-        const cellAddress = XLSX.utils.encode_cell({ r: 0, c: col });
-        if (!worksheet[cellAddress]) continue;
-        worksheet[cellAddress].s = { font: { bold: true } };
-      }
-      const colWidths = [
-        { wch: 30 }, // Width for Name
-        { wch: 30 }, // Width for Email
-        { wch: 30 }, // Width for Company
-        { wch: 70 }, // Width for Message
-        { wch: 35 }, // Width for CreatedAt
-      ];
-      worksheet['!cols'] = colWidths;
-      // Add the worksheet to the workbook
-      XLSX.utils.book_append_sheet(workbook, worksheet, 'Messages');
-      // Define the file path for the Excel file
-      const filePath = path.join(__dirname, 'exports', 'messages.xlsx');
-      // Ensure the directory exists
-      fs.mkdirSync(path.dirname(filePath), { recursive: true });
-      // Write the workbook to a file
-      XLSX.writeFile(workbook, filePath);
-      // Send the file as a download response
-      res.download(filePath, 'messages.xlsx', (err) => {
-        if (err) {
-          console.error('Error downloading the file:', err);
-          res.status(500).json({ message: 'Could not download the file' });
-        }
-        // Delete the file after sending it
-        fs.unlinkSync(filePath);
+exports.exportMessagesToExcel = async (req, res) => {
+  try {
+    const messages = await Message.find();
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Messages');
+    worksheet.columns = [
+      { header: 'Name', key: 'name', width: 30 },
+      { header: 'Email', key: 'email', width: 40 },
+      { header: 'Company', key: 'company', width: 35 },
+      { header: 'Message', key: 'message', width: 70 },
+      { header: 'Created At', key: 'createdAt', width: 35 },
+    ];
+    worksheet.getRow(1).font = { bold: true };
+    messages.forEach((message) => {
+      worksheet.addRow({
+        name: message.name,
+        email: message.email,
+        company: message.company || 'N/A',
+        message: message.message,
+        createdAt: message.createdAt.toISOString(),
       });
-    } catch (error) {
-      console.error('Error exporting messages:', error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-  };
+    });
+    // Define the file path for the Excel file
+    const filePath = path.join(__dirname, 'exports', 'messages.xlsx');
+    // Ensure the directory exists
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    // Write the workbook to a file
+    await workbook.xlsx.writeFile(filePath);
+    // Send the file as a download response
+    res.download(filePath, 'messages.xlsx', (err) => {
+      if (err) {
+        console.error('Error downloading the file:', err);
+        res.status(500).json({ message: 'Could not download the file' });
+      }
+      // Delete the file after sending it
+      fs.unlinkSync(filePath);
+    });
+  } catch (error) {
+    console.error('Error exporting messages:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
