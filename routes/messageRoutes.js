@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.get('/', validatorToken, messageController.getAllMessages);
 router.post('/', messageController.createMessage);
+router.get('/export-messages', validatorToken, messageController.exportMessagesToExcel);
 router.delete('/delete/:ID', validateID, validatorToken, adminRestrict,  messageController.deleteMessage);
 router.get('/:ID', validateID, validatorToken, messageController.getMessageById);
 
