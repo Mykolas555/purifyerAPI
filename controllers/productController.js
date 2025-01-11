@@ -70,14 +70,18 @@ exports.getProductById = async (req, res) => {
 
   exports.addProduct = async (req, res) => {
     try {
-      // Extracting file paths
+      // Extracting file paths for swiper images
       const swipperImage1 = req.files['swipperImage1'] ? `/uploads/${req.files['swipperImage1'][0].filename}` : null;
       const swipperImage2 = req.files['swipperImage2'] ? `/uploads/${req.files['swipperImage2'][0].filename}` : null;
-      const swipperImage3 = req.files['swipperImage3'] ? `/uploads/${req.files['swipperImage1'][0].filename}` : null;
-      const swipperImage4 = req.files['swipperImage4'] ? `/uploads/${req.files['swipperImage2'][0].filename}` : null;
-      const swipperImage5 = req.files['swipperImage1'] ? `/uploads/${req.files['swipperImage1'][0].filename}` : null;
+      const swipperImage3 = req.files['swipperImage3'] ? `/uploads/${req.files['swipperImage3'][0].filename}` : null;
+      const swipperImage4 = req.files['swipperImage4'] ? `/uploads/${req.files['swipperImage4'][0].filename}` : null;
+      const swipperImage5 = req.files['swipperImage5'] ? `/uploads/${req.files['swipperImage5'][0].filename}` : null;
 
-      // Create a new product document
+      // Extracting file paths for content images
+      const contentImage1 = req.files['contentImage1'] ? `/uploads/${req.files['contentImage1'][0].filename}` : null;
+      const contentImage2 = req.files['contentImage2'] ? `/uploads/${req.files['contentImage2'][0].filename}` : null;
+
+      // Create a new product document with all necessary data
       const product = new Product({
         name: req.body.name,
         summary: req.body.summary,
@@ -88,17 +92,19 @@ exports.getProductById = async (req, res) => {
         swipperImage3,
         swipperImage4,
         swipperImage5,
-
+        contentImage1,
+        contentImage2
       });
   
+      // Save the product to the database
       await product.save();
       res.status(201).json({ message: 'Product created successfully!', product });
     } catch (error) {
       res.status(500).json({ message: 'Failed to create product', error });
     }
-  };
-  
-  exports.updateProduct = async (req, res) => {
+};
+
+exports.updateProduct = async (req, res) => {
     try {
       const { ID } = req.params;
   
@@ -120,7 +126,8 @@ exports.getProductById = async (req, res) => {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  };
+};
+
   
  exports.deleteProduct = async (req, res) => {
     try {
