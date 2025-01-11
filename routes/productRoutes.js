@@ -1,11 +1,20 @@
 const express = require('express');
 const productController = require('../controllers/productController');
-const upload = require('../multer');
+const upload = require('../utils/multer');
 const validateID = require('../utils/validators');
 const validatorToken = require('../utils/validatorToken');
 const adminRestrict = require('../utils/adminRestrict');
 
 const router = express.Router();
+
+// Routes
+router.post('/addProduct',  upload.fields([
+  { name: 'swipperImage1', maxCount: 1 },
+  { name: 'swipperImage2', maxCount: 1 },
+  { name: 'swipperImage3', maxCount: 1 },
+  { name: 'swipperImage4', maxCount: 1 },
+  { name: 'swipperImage5', maxCount: 1 },
+]), productController.addProduct);
 
 router.get('/', productController.getAllProducts);
 router.get('/newest', productController.getNewestProducts);

@@ -1,5 +1,6 @@
 const Product = require('../models/productModel');
-
+const fs = require('fs');
+const path = require('path');
 
 // Get all products
 exports.getAllProducts = async (req, res) => {
@@ -67,7 +68,35 @@ exports.getProductById = async (req, res) => {
     }
   };
 
+  exports.addProduct = async (req, res) => {
+    try {
+      // Extracting file paths
+      const swipperImage1 = req.files['swipperImage1'] ? `/uploads/${req.files['swipperImage1'][0].filename}` : null;
+      const swipperImage2 = req.files['swipperImage2'] ? `/uploads/${req.files['swipperImage2'][0].filename}` : null;
+      const swipperImage3 = req.files['swipperImage3'] ? `/uploads/${req.files['swipperImage1'][0].filename}` : null;
+      const swipperImage4 = req.files['swipperImage4'] ? `/uploads/${req.files['swipperImage2'][0].filename}` : null;
+      const swipperImage5 = req.files['swipperImage1'] ? `/uploads/${req.files['swipperImage1'][0].filename}` : null;
+
+      // Create a new product document
+      const product = new Product({
+        name: req.body.name,
+        summary: req.body.summary,
+        properties: req.body.properties,
+        specs: req.body.specs,
+        swipperImage1,
+        swipperImage2,
+        swipperImage3,
+        swipperImage4,
+        swipperImage5,
+
+      });
   
+      await product.save();
+      res.status(201).json({ message: 'Product created successfully!', product });
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to create product', error });
+    }
+  };
   
   exports.updateProduct = async (req, res) => {
     try {

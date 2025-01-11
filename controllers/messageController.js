@@ -108,7 +108,7 @@ exports.exportMessagesToExcel = async (req, res) => {
       });
     });
     // Define the file path for the Excel file
-    const filePath = path.join(__dirname, 'exports', 'messages.xlsx');
+    const filePath = path.join(__dirname, 'messages.xlsx');
     // Ensure the directory exists
     fs.mkdirSync(path.dirname(filePath), { recursive: true });
     // Write the workbook to a file
