@@ -8,14 +8,17 @@ const adminRestrict = require('../utils/adminRestrict');
 const router = express.Router();
 
 // Backend route: Ensure this matches the field names in the front-end form
-router.post('/addProduct',  upload.fields([
-  { name: 'swipperImage1', maxCount: 1 },
-  { name: 'swipperImage2', maxCount: 1 },
-  { name: 'swipperImage3', maxCount: 1 },
-  { name: 'swipperImage4', maxCount: 1 },
-  { name: 'swipperImage5', maxCount: 1 },
-  { name: 'contentImage1', maxCount: 1 }, // New content image 1
-  { name: 'contentImage2', maxCount: 1 }  // New content image 2
+router.post('/addProduct', upload.fields([
+  // Swiper Images
+  { name: 'swiperImage1', maxCount: 1 },
+  { name: 'swiperImage2', maxCount: 1 },
+  { name: 'swiperImage3', maxCount: 1 },
+  { name: 'swiperImage4', maxCount: 1 },
+  { name: 'swiperImage5', maxCount: 1 },
+  { name: 'swiperImage6', maxCount: 1 }, // Added swiperImage6
+  // Content Images
+  { name: 'contentImage1', maxCount: 1 },
+  { name: 'contentImage2', maxCount: 1 }
 ]), productController.addProduct);
 
 
