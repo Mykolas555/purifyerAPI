@@ -121,7 +121,7 @@ exports.getProductById = async (req, res) => {
                 contentImage1,
                 contentImage2
             },
-            specs: {
+            specifications: {
                 weight: req.body.weight,
                 dimensions: req.body.dimensions,
                 power: req.body.power,
