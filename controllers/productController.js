@@ -83,7 +83,7 @@ exports.getProductById = async (req, res) => {
 
         // Create a new product document with nested structure
         const product = new Product({
-            swipperImages: {
+            swiperImages: {
                 swiperImage1,
                 swiperImage2,
                 swiperImage3,
