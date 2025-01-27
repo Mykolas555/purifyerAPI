@@ -9,16 +9,53 @@ This documentation outlines the API configuration, available routes, and their f
 ### 📄 Environment Variables (`config.env`)
 
 ```env
-PORT=3333
-DATABASE=mongodb+srv://<username>:<password>@cluster0.mongodb.net/myDatabase
-DATABASE_PASSWORD=<db_password>
+PORT=
+DATABASE=
+DATABASE_PASSWORD=
+JWT_SECRET=
+TOKEN_EXPIRATION=
+MAX_REQUESTS_PER_DAY=
 ```
 
 ### 🛠 Setting up Environment Variables
 
-- **`PORT`**: Specifies the port number where the server will run.
-- **`DATABASE`**: MongoDB connection string with placeholder for `<password>`.
-- **`DATABASE_PASSWORD`**: Password for the database user.
+- **`PORT`**: Specifies the port number where the server will run.  
+- **`DATABASE`**: MongoDB connection string with a placeholder for `<password>`.  
+- **`DATABASE_PASSWORD`**: The password for the database user.  
+- **`JWT_SECRET`**: A string used for encryption.  
+- **`TOKEN_EXPIRATION`**: Enter a number specifying how long the token is valid.  
+- **`MAX_REQUESTS_PER_DAY`**: Enter a number specifying the maximum messages sent per day from one IP address.  
+---
+
+
+## 🧪 Starting API
+
+1. Start the server:
+   ```bash
+   npm start
+   ```
+2. Use a tool like Postman or cURL to test the endpoints.
+
+
+## 📝 Notes
+
+- Ensure your database connection string is correctly configured in the `config.env` file.
+- Make sure your MongoDB cluster is accessible and your IP is whitelisted in MongoDB Atlas.
+
+---
+
+### 👤 **Roles and Permissions**  
+
+#### There are two roles in this API:
+
+- **Admin**:  
+  - Can perform all actions except deleting itself.  
+
+- **User**:  
+  - Can get messages.  
+  - Can export messages.  
+  - Can create products.  
+  - Can see all users.  
 
 ---
 
@@ -34,22 +71,27 @@ DATABASE_PASSWORD=<db_password>
 - **Response Example:**
   ```json
   {
-    "status": "success",
-    "results": 5,
-    "data": {
-      "users": [
-        {
-          "_id": "64b9a0e01a1234abcd567890",
-          "nickname": "user1",
-          "role": "admin"
-        },
-        {
-          "_id": "64b9a0e01a1234abcd567891",
-          "nickname": "user2",
-          "role": "user"
-        }
-      ]
-    }
+  "status": "success",
+  "results": 3,
+  "data": {
+    "users": [
+      {
+        "_id": "678e4d29a23904b60cfe9f80",
+        "nickname": "user1",
+        "role": "admin",
+        "createdAt": "2025-01-20T13:18:33.011Z",
+        "updatedAt": "2025-01-20T13:18:33.011Z",
+        "__v": 0
+      },
+      {
+        "_id": "6780d3139c72c52fe4b4fbec",
+        "nickname": "user2",
+        "role": "user",
+        "createdAt": "2025-01-10T07:58:11.440Z",
+        "updatedAt": "2025-01-10T07:58:11.440Z",
+        "__v": 0
+      }
+    ]
   }
   ```
 
@@ -198,20 +240,3 @@ DATABASE_PASSWORD=<db_password>
   ```
 
 ---
-
-## 🧪 Testing the API
-
-1. Start the server:
-   ```bash
-   npm start
-   ```
-2. Use a tool like Postman or cURL to test the endpoints.
-3. Verify responses match the examples provided above.
-
----
-
-## 📝 Notes
-
-- Ensure your database connection string is correctly configured in the `config.env` file.
-- Make sure your MongoDB cluster is accessible and your IP is whitelisted in MongoDB Atlas.
-
