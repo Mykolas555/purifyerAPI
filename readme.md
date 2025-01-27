@@ -111,7 +111,15 @@ MAX_REQUESTS_PER_DAY=
     }
   }
   ```
-
+#### 3️⃣ Login User
+- **Endpoint:** `POST /login`
+- **Description:** Logins User.
+- **Response Example:**
+  ```json
+  {
+    
+  }
+  ```
 ---
 
 ### 🛒 Product Routes
