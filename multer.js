@@ -2,6 +2,11 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
+// Function to generate random digits
+function generateRandomDigits(length) {
+  return Math.floor(Math.random() * Math.pow(10, length)).toString().padStart(length, '0');
+}
+
 // Set up storage for uploaded images
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -13,16 +18,12 @@ const storage = multer.diskStorage({
     cb(null, uploadDir);  // Save files in the 'uploads' folder
   },
   filename: function (req, file, cb) {
-    // Generate a random 6-digit number
-    const random6Digits = Math.floor(100000 + Math.random() * 900000); // Random number between 100000 and 999999
-    // Generate a unique filename using the current timestamp, random 6-digit number, and the original file's extension
-    const uniqueSuffix = Date.now() + '-' + random6Digits; // Combine timestamp and random 6-digit number
-    const ext = path.extname(file.originalname); // Get the file extension
-    const filename = uniqueSuffix + ext; // Combine the unique suffix and extension
-    cb(null, filename);  // Save the file with the unique name
+    const randomDigits = generateRandomDigits(6); // Generate 6 random digits
+    const timestamp = Date.now(); // Get the current timestamp
+    const extension = path.extname(file.originalname); // Get the file extension
+    const filename = `${timestamp}-${randomDigits}${extension}`; // Combine timestamp, random digits, and extension
+    cb(null, filename);  // Save file with the new filename
   },
 });
 
 const upload = multer({ storage: storage });
-
-module.exports = upload;
