@@ -16,7 +16,7 @@ router.post('/addProduct', upload.fields([
   { name: 'swiperImage6', maxCount: 1 },
   { name: 'contentImage1', maxCount: 1 },
   { name: 'contentImage2', maxCount: 1 }
-]), productController.addProduct);
+]), validatorToken, productController.addProduct);
 router.get('/', productController.getAllProducts);
 router.get('/newest', productController.getNewestProducts);
 router.get('/:ID', validateID, productController.getProductById);
