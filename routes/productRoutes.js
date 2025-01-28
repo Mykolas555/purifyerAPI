@@ -19,7 +19,6 @@ router.post('/addProduct', upload.fields([
 ]), productController.addProduct);
 router.get('/', productController.getAllProducts);
 router.get('/newest', productController.getNewestProducts);
-router.patch('/:ID', validateID, validatorToken, productController.updateProduct);
 router.get('/:ID', validateID, productController.getProductById);
 router.delete('/:ID', validateID, validatorToken, adminRestrict, productController.deleteProduct);
 
