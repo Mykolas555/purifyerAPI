@@ -48,10 +48,7 @@ exports.getProductById = async (req, res) => {
 //get 3 newest products for home page
   exports.getNewestProducts = async (req, res) => {
     try {
-      const newestProducts = await Product.find()
-        .sort({ createdAt: -1 }) 
-        .limit(3);
-  
+      const newestProducts = await Product.find().sort({ createdAt: -1 }) .limit(3);
       res.status(200).json({
         status: 'success',
         results: newestProducts.length,
@@ -69,18 +66,15 @@ exports.getProductById = async (req, res) => {
 
   exports.addProduct = async (req, res) => {
     try {
-        // Extracting file paths for swiper images
+        // Extracting file paths for images
         const swiperImage1 = req.files['swiperImage1'] ? `/uploads/${req.files['swiperImage1'][0].filename}` : null;
         const swiperImage2 = req.files['swiperImage2'] ? `/uploads/${req.files['swiperImage2'][0].filename}` : null;
         const swiperImage3 = req.files['swiperImage3'] ? `/uploads/${req.files['swiperImage3'][0].filename}` : null;
         const swiperImage4 = req.files['swiperImage4'] ? `/uploads/${req.files['swiperImage4'][0].filename}` : null;
         const swiperImage5 = req.files['swiperImage5'] ? `/uploads/${req.files['swiperImage5'][0].filename}` : null;
         const swiperImage6 = req.files['swiperImage6'] ? `/uploads/${req.files['swiperImage6'][0].filename}` : null;
-
-        // Extracting file paths for content images
         const contentImage1 = req.files['contentImage1'] ? `/uploads/${req.files['contentImage1'][0].filename}` : null;
         const contentImage2 = req.files['contentImage2'] ? `/uploads/${req.files['contentImage2'][0].filename}` : null;
-
         // Create a new product document with nested structure
         const product = new Product({
             swiperImages: {
@@ -130,51 +124,17 @@ exports.getProductById = async (req, res) => {
                 negative_ions: req.body.negative_ions
             }
         });
-
-        // Save the product to the database
         await product.save();
         res.status(201).json({ message: 'Product created successfully!', product });
-    } catch (error) {
-        res.status(500).json({ message: 'Failed to create product', error });
-    }
+    } catch (error) { res.status(500).json({ message: 'Failed to create product', error });}
 };
 
-exports.updateProduct = async (req, res) => {
-    try {
-      const { ID } = req.params;
-      const product = await Product.findById(ID);
-  
-      if (!product) {
-        return res.status(404).json({ message: 'Product not found' });
-      }
-  
-      const updatedProduct = await Product.findByIdAndUpdate(
-        ID,
-        { $set: req.body },
-        { new: true, runValidators: true }
-      );
-  
-      res.status(200).json(updatedProduct);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-};
-
-  
  exports.deleteProduct = async (req, res) => {
     try {
       const { ID } = req.params;
       const product = await Product.findByIdAndDelete(ID);
-  
-      if (!product) {
-        return res.status(404).json({ message: 'Product not found' });
-      }
-  
+      if (!product) { return res.status(404).json({ message: 'Product not found' });}
       res.status(200).json({ message: 'Product deleted successfully' });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
+    } catch (error) { res.status(500).json({ message: error.message });}
   };
   
-
- 
