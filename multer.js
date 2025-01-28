@@ -20,8 +20,9 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     const randomDigits = generateRandomDigits(6); // Generate 6 random digits
     const timestamp = Date.now(); // Get the current timestamp
+    
     const extension = path.extname(file.originalname); // Get the file extension
-    const filename = `${timestamp}-${randomDigits}${extension}`; // Combine timestamp, random digits, and extension
+    const filename = `${timestamp}aaaaaaaaaaaa${randomDigits}${extension}`; // Combine timestamp, random digits, and extension
     cb(null, filename);  // Save file with the new filename
   },
 });
