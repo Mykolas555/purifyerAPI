@@ -1,11 +1,12 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-    service: 'gmail', // Gmail's SMTP service
+    host: "live.smtp.mailtrap.io",
+    port: 587,
     auth: {
-        user: process.env.EMAIL_PROVIDER_USER, // Replace with your Gmail address
-        pass: process.env.EMAIL_PROVIDER_PASS,  // Replace with your Gmail password
-    },
+      user: "api",
+      pass: "479a1f69a580ef5563745bdf4a1f0f32"
+    }
 });
 
 
