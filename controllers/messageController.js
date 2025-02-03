@@ -46,30 +46,40 @@ exports.getMessageById = async (req, res) => {
     }
   };
 
-// Create message
-exports.createMessage = async (req, res) => {
+  exports.createMessage = async (req, res) => {
     try {
-      const { name, email, company, message } = req.body;
-      const newMessage = new Message({
-        name,
-        email,
-        company,
-        message,
-      });
-      const savedMessage = await newMessage.save();
-      return res.status(201).json({
-        success: true,
-        data: savedMessage,
-      });
-    } catch (error) {
-      return res.status(500).json({
-        success: false,
-        message: 'Failed to create message',
-        error: error.message,
-      });
-    }
-  };
+        const { name, email, company, message } = req.body;
 
+        // Save message to database
+        const newMessage = new Message({ name, email, company, message });
+        const savedMessage = await newMessage.save();
+
+        // Email content
+        const mailOptions = {
+            from: 'postmaster@YOUR_MAILGUN_DOMAIN', // Your sender email
+            to: 'your-email@example.com', // Replace with the recipient (your email)
+            subject: 'New Contact Form Message',
+            text: `You received a new message:\n\nName: ${name}\nEmail: ${email}\nCompany: ${company}\nMessage: ${message}`
+        };
+
+        // Send email
+        await transporter.sendMail(mailOptions);
+
+        return res.status(201).json({
+            success: true,
+            data: savedMessage,
+            message: 'Message saved and email sent successfully',
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to create message or send email',
+            error: error.message,
+        });
+    }
+};
 // Delete message
   exports.deleteMessage = async (req, res) => {
     try {
