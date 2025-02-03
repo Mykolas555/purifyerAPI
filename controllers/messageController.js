@@ -57,8 +57,8 @@ exports.getMessageById = async (req, res) => {
 
         // Email content
         const mailOptions = {
-            from: 'mykolasburner@gmail.com', // Sender's email from req.body
-            to: 'mykolasburner@gmail.com', // Your email from environment variables
+            from: 'mykolasburner@asd.lt', // Sender's email from req.body
+            to: 'mykolas.motuzas@gmail.com', // Your email from environment variables
             subject: 'New Contact Form Message',
             text: `You received a new message:\n\nName: ${name}\nEmail: ${email}\nCompany: ${company}\nMessage: ${message}`
         };
