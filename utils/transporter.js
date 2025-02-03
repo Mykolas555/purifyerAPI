@@ -1,13 +1,11 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-    host: 'smtp.mailersend.net',
-    port: 587,
-    secure: false,
+    service: 'gmail', // Gmail's SMTP service
     auth: {
-        user: process.env.EMAIL_PROVIDER_USER,
-        pass: process.env.EMAIL_PROVIDER_PASS
-    }
+        user: process.env.EMAIL_PROVIDER_USER, // Replace with your Gmail address
+        pass: process.env.EMAIL_PROVIDER_PASS,  // Replace with your Gmail password
+    },
 });
 
 
