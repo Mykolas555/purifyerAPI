@@ -2,7 +2,7 @@ const Message = require('../models/messageModel');
 const fs = require('fs');
 const path = require('path');
 const ExcelJS = require('exceljs');
-
+const transporter = require("../utils/transporter")
 // Get all messages
 exports.getAllMessages = async (req, res) => {
   try {
@@ -56,8 +56,8 @@ exports.getMessageById = async (req, res) => {
 
         // Email content
         const mailOptions = {
-            from: 'postmaster@YOUR_MAILGUN_DOMAIN', // Your sender email
-            to: 'your-email@example.com', // Replace with the recipient (your email)
+            from: 'Mykolas@gmail.com', // Your sender email
+            to: '${email}', // Replace with the recipient (your email)
             subject: 'New Contact Form Message',
             text: `You received a new message:\n\nName: ${name}\nEmail: ${email}\nCompany: ${company}\nMessage: ${message}`
         };

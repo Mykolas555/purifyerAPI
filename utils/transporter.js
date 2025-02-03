@@ -5,8 +5,8 @@ const transporter = nodemailer.createTransport({
     port: 587, // Port for SMTP
     secure: false, // true for 465, false for other ports
     auth: {
-        user: 'postmaster@YOUR_MAILGUN_DOMAIN', // Your Mailgun SMTP username
-        pass: 'YOUR_MAILGUN_API_KEY' // Your Mailgun API key
+        user: 'mykolasburner@gmail.com', // Your Mailgun SMTP username
+        pass: 'mlsn.c5056a80cebbadd4c4a82e027d5f11e024f44f3154b37856a70898646b552cc3' // Your Mailgun API key
     }
 });
 

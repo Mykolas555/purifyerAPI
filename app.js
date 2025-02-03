@@ -21,7 +21,6 @@ app.use(cors(corsOptionsDev));
 
 app.use(express.json());
 app.use(morgan('dev'));
-
 app.use('/api/v1/products/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/users', userRoutes);
