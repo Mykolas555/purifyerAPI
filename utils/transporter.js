@@ -1,21 +1,14 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-    host: 'sandbox.smtp.mailtrap.io',
+    host: 'smtp.mailosaur.net',
     port: 587,
     secure: false,
     auth: {
-        user: '2ff443ce681b5bc',
-        pass: '144533935687eb'
+        user: 'zxm5nxos@mailosaur.net',
+        pass: 'WYIz0Lagl1CgYGeFhB4UGRRXqxlIjZgj'
     }
 });
 
-transporter.verify(function(error, success) {
-    if (error) {
-        console.log('Error occurred:', error);
-    } else {
-        console.log('Server is ready to send emails');
-    }
-});
 
 module.exports = transporter; // Export the transporter for reuse
