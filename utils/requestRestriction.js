@@ -7,10 +7,6 @@ const requestRestriction = (req, res, next) => {
         req.ip;
         
     const ip = forwardedIps;
-    
-    console.log('Current requestCounts:', requestCounts);
-    console.log('Client IP:', ip);
-    
     const restriction = parseInt(process.env.MAX_REQUESTS_PER_DAY) || 100;
     const currentTime = new Date();
 
@@ -35,7 +31,6 @@ const requestRestriction = (req, res, next) => {
     }
 
     requestCounts[ip].count += 1;
-    console.log('Updated count for IP:', ip, 'is:', requestCounts[ip].count);
     next();
 };
 
