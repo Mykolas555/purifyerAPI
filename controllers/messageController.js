@@ -58,7 +58,7 @@ exports.getMessageById = async (req, res) => {
         // Email content
         const mailOptions = {
           from: process.env.EMAIL_PROVIDER_USER,
-          to: process.env.ADMIN_EMAIL,
+          to: 'mykolas.motuzas@gmail.com',
           subject: 'Nauja žinutė dėl Ible Airvida produkcijos',
           html: ` 
               <!DOCTYPE html>
