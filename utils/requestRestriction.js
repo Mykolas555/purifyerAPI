@@ -7,7 +7,10 @@ const requestRestriction = (req, res, next) => {
     const restriction = parseInt(process.env.MAX_REQUESTS_PER_DAY) || 100;
     console.log('Restriction value:', restriction); // Add this to debug
     
-    const ip = req.ip;
+    const ip = req.headers['x-forwarded-for'] || 
+               req.connection.remoteAddress || 
+               req.socket.remoteAddress || 
+               req.ip;
     const currentTime = new Date();
 
     if (!requestCounts[ip]) {
