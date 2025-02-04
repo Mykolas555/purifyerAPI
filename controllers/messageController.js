@@ -57,8 +57,8 @@ exports.getMessageById = async (req, res) => {
 
         // Email content
         const mailOptions = {
-          from: 'test.database.mc@gmail.com',
-          to: 'mykolas.motuzas@gmail.com',
+          from: process.env.EMAIL_PROVIDER_USER,
+          to: process.env.ADMIN_EMAIL,
           subject: 'Nauja žinutė dėl Ible Airvida produkcijos',
           html: ` 
               <!DOCTYPE html>
@@ -69,19 +69,16 @@ exports.getMessageById = async (req, res) => {
               </head>
               <body style="font-family: Arial, sans-serif; color: #333; text-align: center; padding: 20px; background-color: #f4f4f4;">
                   <div style="max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background: #fff;">
-                      <h2 style="color: #007BFF;">📩 New Contact Form Message</h2>
-                      <p><strong>Name:</strong> ${name}</p>
-                      <p><strong>Email:</strong> <a href="mailto:${email}" style="color: #007BFF; text-decoration: none;">${email}</a></p>
-                      <p><strong>Company:</strong> ${company || 'N/A'}</p>
-                      <p style="background: #f8f9fa; padding: 10px; border-left: 4px solid #007BFF; font-style: italic;">
-                          ${message}
-                      </p>
+                      <h2 style="color:rgb(8, 92, 182);">📩 Nauja žinutė dėl Ible Airvida produkcijos</h2>
+                      <p><strong>Vardas:</strong> ${name}</p>
+                      <p><strong>El. paštas:</strong> <a href="mailto:${email}" style="color: #007BFF; text-decoration: none;">${email}</a></p>
+                      <p><strong>Įmonė:</strong> ${company || 'N/A'}</p>
+                      <p style="background: #f8f9fa; padding: 10px; border-left: 4px solid #007BFF; font-style: italic;">${message}</p>
                       <hr>
                       <footer style="font-size: 12px; color: #666;">
-                          <p>This email was sent automatically. Please do not reply.</p>
+                          <p>Šis el. laiškas buvo išsiųstas automatiškai. Prašome neatsakyti.</p>
                       </footer>
-                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ2VKwGNov5EwbGAD-H_h9CaGDiRzGRqMM_qz7XOvfYXCIzZm8D2R9qnLs0Sem3jtq9-s&usqp=CAU" 
-                           alt="Company Logo" style="width: 100px; margin-top: 10px;">
+                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ2VKwGNov5EwbGAD-H_h9CaGDiRzGRqMM_qz7XOvfYXCIzZm8D2R9qnLs0Sem3jtq9-s&usqp=CAU" alt="Company Logo" style="width: 100px; margin-top: 10px;">
                   </div>
               </body>
               </html>
