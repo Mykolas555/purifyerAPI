@@ -20,6 +20,24 @@ exports.getAllProducts = async (req, res) => {
   }
 };
 
+// Get all products to front table
+exports.getAllProductsToFrontTable = async (req, res) => {
+  try {
+    const products = await Product.find().sort({ createdAt: -1 });
+
+    res.status(200).json({
+      status: 'success',
+      results: products.length,
+      data: { products },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: 'error',
+      message: err.message,
+    });
+  }
+};
+
 // Get a product by ID
 exports.getProductById = async (req, res) => {
     try {

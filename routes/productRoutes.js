@@ -19,6 +19,7 @@ router.post('/addProduct', upload.fields([
 ]), validatorToken, productController.addProduct);
 router.get('/', productController.getAllProducts);
 router.get('/newest', productController.getNewestProducts);
+router.get('/productTable', validatorToken, productController.getAllProductsToFrontTable);
 router.get('/:ID', validateID, productController.getProductById);
 router.patch('/:ID', validateID, validatorToken, productController.showProductInPage);
 router.delete('/:ID', validateID, validatorToken, adminRestrict, productController.deleteProduct);
