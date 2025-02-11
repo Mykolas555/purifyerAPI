@@ -5,13 +5,12 @@ const path = require('path');
 // Get all products
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find().sort({ createdAt: -1 }) ;
+    const products = await Product.find({ checked: true }).sort({ createdAt: -1 });
+
     res.status(200).json({
       status: 'success',
       results: products.length,
-      data: {
-        products,
-      },
+      data: { products },
     });
   } catch (err) {
     res.status(500).json({
@@ -48,7 +47,7 @@ exports.getProductById = async (req, res) => {
 //get 3 newest products for home page
   exports.getNewestProducts = async (req, res) => {
     try {
-      const newestProducts = await Product.find().sort({ createdAt: -1 }) .limit(3);
+      const newestProducts = await Product.find({ checked: true }).sort({ createdAt: -1 }) .limit(3);
       res.status(200).json({
         status: 'success',
         results: newestProducts.length,
