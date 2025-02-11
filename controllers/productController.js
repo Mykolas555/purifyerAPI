@@ -134,9 +134,9 @@ exports.showProductInPage = async (req, res) => {
       const { ID } = req.params;
       const { checked } = req.body;
       const updatedProduct = await Product.findByIdAndUpdate(
-      id,
+      ID,
       { checked },
-      { new: true } // Return the updated document
+      { new: true }
     );
 
     if (!updatedProduct) {

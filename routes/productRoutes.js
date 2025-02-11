@@ -20,6 +20,7 @@ router.post('/addProduct', upload.fields([
 router.get('/', productController.getAllProducts);
 router.get('/newest', productController.getNewestProducts);
 router.get('/:ID', validateID, productController.getProductById);
+router.patch('/:ID', validateID, validatorToken, productController.showProductInPage);
 router.delete('/:ID', validateID, validatorToken, adminRestrict, productController.deleteProduct);
 
 module.exports = router;
