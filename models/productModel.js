@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
+  checked: { type: Boolean, default: true },
   swiperImages: {
     swiperImage1: {
       type: String,
