@@ -129,6 +129,27 @@ exports.getProductById = async (req, res) => {
     } catch (error) { res.status(500).json({ message: 'Failed to create product', error });}
 };
 
+exports.showProductInPage = async (req, res) => {
+    try {
+      const { ID } = req.params;
+      const { checked } = req.body;
+      const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      { checked },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.status(200).json(updatedProduct);
+  } catch (error) {
+    console.error("Error updating product:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+  };
+
  exports.deleteProduct = async (req, res) => {
     try {
       const { ID } = req.params;
